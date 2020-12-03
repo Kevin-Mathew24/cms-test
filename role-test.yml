@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: IAM Roles for HCP CMS CANADA Team
+Parameters:
+  SamlProviderName:
+    Type: String
+    Default: LillyMgmt
+Resources:
+  rNewRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: pipeline_role_test_04
+      PermissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy/LZ-IAM-Boundary'
+      Tags:
+        - Key: Restricted
+          Value: 'True'
+      MaxSessionDuration: 36000
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated:
+                - !Sub arn:aws:iam::${AWS::AccountId}:saml-provider/${SamlProviderName}
+            Action: sts:AssumeRoleWithSAML
+            Condition:
+              StringEquals:
+               "SAML:aud": "https://signin.aws.amazon.com/saml"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AWSLambdaExecute
+
+  NewTestRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: pipeline_test_role
+      PermissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy/LZ-IAM-Boundary'
+      Tags:
+        - Key: Restricted
+          Value: 'True'
+      MaxSessionDuration: 36000
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated:
+                - !Sub arn:aws:iam::${AWS::AccountId}:saml-provider/${SamlProviderName}
+            Action: sts:AssumeRoleWithSAML
+            Condition:
+              StringEquals:
+               "SAML:aud": "https://signin.aws.amazon.com/saml"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AWSLambdaExecute
