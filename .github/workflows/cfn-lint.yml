@@ -30,4 +30,4 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         cfn-lint --version
-        cfn-lint -t ./role-test.yml
+        cfn-lint ./role-test.yml
