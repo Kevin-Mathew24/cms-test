@@ -4,6 +4,12 @@ Parameters:
   SamlProviderName:
     Type: String
     Default: LillyMgmt
+  SamlProviderName:
+    Type: String
+    Default: LillyMgmt
+  SamlProviderName2:
+    Type: String
+    Default: LillyMgmt
 Resources:
   rNewRole:
     Type: AWS::IAM::Role
