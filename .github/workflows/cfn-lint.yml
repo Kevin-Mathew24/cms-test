@@ -1,4 +1,4 @@
-name: CFN-Lint
+name: cfn-lint
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
     branches: [ main, develop, qa ]
 
 jobs:
-  build:
+  cloudformation-linter:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -27,7 +27,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install cfn-lint
         
-    - name: Analysing the code with pylint
+    - name: Analysing the template with cfn-lint
       run: |
         cfn-lint --version
         cfn-lint ./role-test.yml
